@@ -49,18 +49,6 @@
     <Compile Include="Net\Server.cs" />
     <Compile Include="Net\Socket.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="_old\EventLoop.cs" />
-    <Compile Include="_old\Net.cs" />
-    <Compile Include="_old\Net.Server.cs" />
-    <Compile Include="_old\Net.Socket.cs" />
-    <Compile Include="_old\Program.cs" />
-    <Compile Include="_old\RefObject.cs" />
-    <Compile Include="_oldest\AsyncObject.cs" />
-    <Compile Include="_oldest\EventLoop.cs" />
-    <Compile Include="_oldest\IEventEmitter.cs" />
-    <Compile Include="_oldest\Net\TcpListener.cs" />
-    <Compile Include="_oldest\Net\TcpSocket.cs" />
-    <Compile Include="_oldest\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
