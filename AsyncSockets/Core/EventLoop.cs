@@ -58,9 +58,8 @@ namespace AsyncSockets.Core
             {
                 eventPushed.WaitOne();
 
-                if (events.Count > 0)
-                    while (events.Count > 0)
-                        events.Dequeue()();
+                while (hasEvents())
+                    getEvent()();
 
                 if (!running)
                     break;
@@ -92,6 +91,18 @@ namespace AsyncSockets.Core
 
                 Thread.Sleep(10);
             }
+        }
+
+        bool hasEvents()
+        {
+            lock (events)
+                return events.Count > 0;
+        }
+
+        Action getEvent()
+        {
+            lock (events)
+                return events.Dequeue();
         }
     }
 }
