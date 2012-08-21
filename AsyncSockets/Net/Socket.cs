@@ -17,6 +17,9 @@ namespace AsyncSockets.Net
         private Wininet.IPEndPoint endPoint;
         private Encoding encoding = Encoding.UTF8;
 
+        private Address localEndpoint;
+        private Address remoteEndpoint;
+
         private int _bytesRead = 0;
         private int _bytesWritten = 0;
 
@@ -44,13 +47,7 @@ namespace AsyncSockets.Net
         {
             get
             {
-                var temp = nativeSocket.LocalEndPoint as Wininet.IPEndPoint;
-                return new Address
-                {
-                    IP = temp.Address.ToString(),
-                    Port = temp.Port,
-                    Family = temp.AddressFamily.ToString()
-                };
+                return localEndpoint;
             }
         }
 
@@ -58,16 +55,7 @@ namespace AsyncSockets.Net
         {
             get
             {
-                var temp = nativeSocket.RemoteEndPoint as Wininet.IPEndPoint;
-                if (temp == null)
-                    return null;
-
-                return new Address
-                {
-                    IP = temp.Address.ToString(),
-                    Port = temp.Port,
-                    Family = temp.AddressFamily.ToString()
-                };
+                return remoteEndpoint;
             }
         }
 
@@ -94,7 +82,24 @@ namespace AsyncSockets.Net
                 throw new ArgumentNullException("rawSocket");
 
             if (rawSocket.RemoteEndPoint != null)
+            {
                 endPoint = rawSocket.RemoteEndPoint as Wininet.IPEndPoint;
+
+                var tempRemoteEndpoint = rawSocket.RemoteEndPoint as Wininet.IPEndPoint;
+                remoteEndpoint = new Address
+                {
+                    IP = tempRemoteEndpoint.Address.ToString(),
+                    Port = tempRemoteEndpoint.Port,
+                    Family = tempRemoteEndpoint.AddressFamily.ToString()
+                };
+            }
+
+            var tempLocalEndpoint = rawSocket.LocalEndPoint as Wininet.IPEndPoint;
+            localEndpoint = new Address {
+                IP = tempLocalEndpoint.Address.ToString(),
+                Port = tempLocalEndpoint.Port,
+                Family = tempLocalEndpoint.AddressFamily.ToString()
+            };
 
             rawSocket.NoDelay = true;
 
